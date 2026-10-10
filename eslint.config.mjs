@@ -104,7 +104,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/config/**/*.ts'],
+    files: ['src/config/**/*.ts', 'test/support/**/*.ts', '*.config.mts'],
     rules: { 'no-restricted-properties': 'off' },
   },
   {

@@ -1,10 +1,11 @@
 import { BadRequestException, HttpException, PayloadTooLargeException } from '@nestjs/common';
+import { mapPostgresError } from '../database/pg-errors';
 import type { DomainError } from '../errors/domain-error';
 
 type ErrorMapper = (error: unknown) => DomainError | HttpException | null;
 
 /** Infrastructure errors that have a meaningful HTTP answer. The first match wins. */
-const mappers: readonly ErrorMapper[] = [mapBodyParserError];
+const mappers: readonly ErrorMapper[] = [mapBodyParserError, mapPostgresError];
 
 /** Returns the mapped error, or the original value if no mapper matched. */
 export function mapKnownError(error: unknown): unknown {

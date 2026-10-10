@@ -24,6 +24,7 @@ export default defineConfig({
         test: {
           name: 'integration',
           include: ['test/integration/**/*.int-spec.ts'],
+          globalSetup: ['test/support/postgres.global-setup.ts'],
           environment: 'node',
           testTimeout: 60_000,
           hookTimeout: 120_000,
@@ -34,6 +35,7 @@ export default defineConfig({
         test: {
           name: 'e2e',
           include: ['test/e2e/**/*.e2e-spec.ts'],
+          globalSetup: ['test/support/postgres.global-setup.ts'],
           environment: 'node',
           testTimeout: 60_000,
           hookTimeout: 120_000,
