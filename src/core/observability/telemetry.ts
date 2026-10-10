@@ -95,6 +95,8 @@ export function startTelemetry(config: Config, role: ProcessRole): Telemetry {
         meterName: '@opentelemetry/instrumentation-http',
         aggregation: { type: AggregationType.DROP },
       },
+      // Job metrics come from core/jobs (queue, outcome, retries, depth); pg-boss traces stay.
+      { meterName: 'pg-boss', aggregation: { type: AggregationType.DROP } },
     ],
   });
   metrics.setGlobalMeterProvider(meterProvider);

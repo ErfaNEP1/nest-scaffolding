@@ -6,8 +6,10 @@ import { contextModule } from './core/context';
 import { DatabaseModule, transactionalPlugin } from './core/database';
 import { HealthModule } from './core/health';
 import { HttpModule, ProblemDetailsFilter } from './core/http';
+import { JobsModule } from './core/jobs';
 import { loggerModule } from './core/logging';
 import { ObservabilityModule } from './core/observability';
+import { featureModules } from './feature-modules';
 
 export interface AppModuleOptions {
   /** `false` builds the app without connecting to PostgreSQL (OpenAPI generation). */
@@ -27,8 +29,10 @@ export class AppModule {
         HttpModule,
         DatabaseModule.forRoot({ connect: options.connectDatabase ?? true }),
         ObservabilityModule,
-        HealthModule,
+        HealthModule.forApi(),
         AuthModule,
+        JobsModule.forRoot({ role: 'api', start: options.connectDatabase ?? true }),
+        ...featureModules,
       ],
       providers: [{ provide: APP_FILTER, useClass: ProblemDetailsFilter }],
     };

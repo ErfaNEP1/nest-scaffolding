@@ -1,23 +1,7 @@
-import {
-  Controller,
-  Get,
-  Optional,
-  Res,
-  ServiceUnavailableException,
-  VERSION_NEUTRAL,
-} from '@nestjs/common';
-import {
-  type HealthCheckResult,
-  HealthCheckService,
-  type HealthIndicatorFunction,
-  TypeOrmHealthIndicator,
-} from '@nestjs/terminus';
+import { Controller, Get, Res, VERSION_NEUTRAL } from '@nestjs/common';
 import type { Response } from 'express';
 import { Public } from '../auth/decorators';
-import { ReadinessCheck } from './readiness-check';
-import { ShutdownHealthIndicator } from './shutdown.health';
-
-const DB_PING_TIMEOUT_MS = 2_000;
+import { HealthService } from './health.service';
 
 /**
  * Probes, outside `/api`, without auth and not access-logged.
@@ -28,34 +12,17 @@ const DB_PING_TIMEOUT_MS = 2_000;
 @Public()
 @Controller({ path: 'health', version: VERSION_NEUTRAL })
 export class HealthController {
-  constructor(
-    private readonly health: HealthCheckService,
-    private readonly db: TypeOrmHealthIndicator,
-    private readonly shutdown: ShutdownHealthIndicator,
-    @Optional() private readonly extra?: ReadinessCheck,
-  ) {}
+  constructor(private readonly health: HealthService) {}
 
   @Get('live')
-  live(): { status: 'ok' } {
-    return { status: 'ok' };
+  live(): unknown {
+    return this.health.live().body;
   }
 
   @Get('ready')
-  async ready(
-    @Res({ passthrough: true }) res: Response,
-  ): Promise<HealthCheckResult | object | string> {
-    const checks: HealthIndicatorFunction[] = [
-      () => this.shutdown.check(),
-      () => this.db.pingCheck('database', { timeout: DB_PING_TIMEOUT_MS }),
-    ];
-    const extra = this.extra;
-    if (extra) checks.push(() => extra.check());
-    try {
-      return await this.health.check(checks);
-    } catch (error) {
-      if (!(error instanceof ServiceUnavailableException)) throw error;
-      res.status(503);
-      return error.getResponse();
-    }
+  async ready(@Res({ passthrough: true }) res: Response): Promise<unknown> {
+    const result = await this.health.ready();
+    res.status(result.status);
+    return result.body;
   }
 }

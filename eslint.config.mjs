@@ -124,4 +124,11 @@ export default tseslint.config(
     files: ['**/*.mjs'],
     ...tseslint.configs.disableTypeChecked,
   },
+  {
+    files: ['**/*.mjs'],
+    languageOptions: {
+      globals: { process: 'readonly', console: 'readonly', URL: 'readonly', Buffer: 'readonly' },
+    },
+    rules: { 'no-restricted-properties': 'off' },
+  },
 );

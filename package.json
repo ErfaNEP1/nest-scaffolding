@@ -11,8 +11,10 @@
   "scripts": {
     "prepare": "husky",
     "dev": "nest start --watch --builder swc --exec \"node --env-file-if-exists=.env --import ./dist/instrumentation.js\"",
+    "dev:worker": "nest start --watch --builder swc --entryFile worker --exec \"node --env-file-if-exists=.env --import ./dist/instrumentation.js\"",
     "build": "nest build",
     "start": "node --env-file-if-exists=.env --import ./dist/instrumentation.js dist/main.js",
+    "start:worker": "node --env-file-if-exists=.env --import ./dist/instrumentation.js dist/worker.js",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -26,7 +28,8 @@
     "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test:unit && pnpm test:int",
     "db:migrate": "docker compose run --rm migrate",
     "db:status": "docker compose run --rm migrate --status",
-    "db:new": "bash db/new-migration.sh"
+    "db:new": "bash db/new-migration.sh",
+    "jobs:schema-sql": "node scripts/pgboss-schema.mjs"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.3",
@@ -86,6 +89,7 @@
     "nestjs-cls": "7.0.1",
     "nestjs-pino": "5.3.1",
     "pg": "8.23.1",
+    "pg-boss": "12.37.1",
     "pino": "10.4.0",
     "pino-http": "11.0.0",
     "reflect-metadata": "0.2.2",
