@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Publishes contract/ to the registry configured for the package scope in the root .npmrc
 // ("<scope>:registry=https://..."). Credentials come from your user ~/.npmrc.
-import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { runPnpm } from './run-pnpm.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = JSON.parse(readFileSync(join(root, 'contract', 'package.json'), 'utf8'));
@@ -18,11 +18,7 @@ if (!line) {
   process.exit(1);
 }
 const registry = line.split('=').slice(1).join('=').trim();
-execFileSync(
-  'pnpm',
-  ['publish', '--registry', registry, '--no-git-checks', '--access', 'restricted'],
-  {
-    cwd: join(root, 'contract'),
-    stdio: 'inherit',
-  },
-);
+runPnpm(['publish', '--registry', registry, '--no-git-checks', '--access', 'restricted'], {
+  cwd: join(root, 'contract'),
+  stdio: 'inherit',
+});
