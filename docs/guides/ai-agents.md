@@ -43,6 +43,14 @@ keep `name` equal to the folder name and make `description` say **when** to use 
 
 ## Third-party skills
 
+Vendored: test-driven-development, systematic-debugging, verification-before-completion,
+writing-plans, executing-plans (obra/superpowers); grill-me, grilling,
+improve-codebase-architecture, codebase-design, domain-modeling (mattpocock/skills; the
+issue-tracker setup of that repo is not needed by these skills);
+supabase-postgres-best-practices (supabase/agent-skills); skill-creator (anthropics/skills,
+without its scripts); find-skills (vercel-labs/skills). Left out: nestjs-best-practices
+(see `THIRD_PARTY.md`).
+
 Vendored copies of public skills live next to ours and are listed in
 `.agents/skills/THIRD_PARTY.md` (source repository, commit, license, date, local changes).
 Rules:
@@ -60,7 +68,7 @@ Rules:
 
 ```bash
 # in a scratch directory, not in the repository
-npx skills add <owner/repo> --skill <name>       # check `npx skills --help` for current flags
+git clone --depth 1 https://github.com/<owner>/<repo>   # original repository only; note the commit SHA
 ```
 
 1. Read every file of the skill. Apply rule 2.

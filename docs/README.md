@@ -6,8 +6,10 @@ This folder is the source of truth for the service. Code follows these documents
 
 1. `docs/project/`: business truth (what the system must do).
 2. `docs/architecture/adr/`: technical decisions.
-3. Other files in `docs/`: conventions and guides.
-4. Code follows docs. If code and docs disagree, or two docs disagree, do **not** guess:
+3. Other files in `docs/` (except `plans/`): conventions and guides.
+4. `docs/plans/`: working plans for multi-step changes. They describe intent;
+   the documents above always win.
+5. Code follows docs. If code and docs disagree, or two docs disagree, do **not** guess:
    stop and report the conflict.
 
 Business documents and technical documents stay in separate folders.
