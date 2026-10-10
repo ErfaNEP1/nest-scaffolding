@@ -7,7 +7,7 @@
 // - resets CHANGELOG.md to an empty Unreleased section and the versions to 0.1.0,
 // - with --remove-sample, deletes the sample module and regenerates openapi/openapi.json.
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, lstatSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -58,7 +58,8 @@ function replacePlaceholders(name, scope) {
   const changed = [];
   for (const file of files) {
     const path = join(root, file);
-    if (!existsSync(path)) continue;
+    // Skip deleted files and symlinks (for example .claude/skills).
+    if (!existsSync(path) || !lstatSync(path).isFile()) continue;
     const content = readFileSync(path, 'utf8');
     if (!PLACEHOLDERS.some((placeholder) => content.includes(placeholder))) continue;
     writeFileSync(

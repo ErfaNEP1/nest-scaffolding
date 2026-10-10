@@ -39,3 +39,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Health probes now also return `x-request-id` (the request context middleware runs for every route, not only under `/api`).
 - `.env.example` no longer overrides the version and commit set by the image build (`build_info`).
+- `pnpm template:init` no longer fails on the `.claude/skills` symlink.
