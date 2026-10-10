@@ -30,6 +30,7 @@ export class ProblemDetailsFilter implements ExceptionFilter {
     this.log(exception, problem);
 
     if (res.headersSent) return;
+    if (problem.status === 401) res.setHeader('www-authenticate', 'Bearer');
     res
       .status(problem.status)
       .setHeader('content-type', `${PROBLEM_CONTENT_TYPE}; charset=utf-8`)

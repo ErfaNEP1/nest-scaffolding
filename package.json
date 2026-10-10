@@ -82,6 +82,7 @@
     "@opentelemetry/semantic-conventions": "1.43.0",
     "express": "5.2.1",
     "helmet": "8.3.0",
+    "jose": "6.2.12",
     "nestjs-cls": "7.0.1",
     "nestjs-pino": "5.3.1",
     "pg": "8.23.1",

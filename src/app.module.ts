@@ -1,6 +1,7 @@
 import { type DynamicModule, Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { type Config, ConfigModule } from './config';
+import { AuthModule } from './core/auth';
 import { contextModule } from './core/context';
 import { DatabaseModule, transactionalPlugin } from './core/database';
 import { HealthModule } from './core/health';
@@ -27,6 +28,7 @@ export class AppModule {
         DatabaseModule.forRoot({ connect: options.connectDatabase ?? true }),
         ObservabilityModule,
         HealthModule,
+        AuthModule,
       ],
       providers: [{ provide: APP_FILTER, useClass: ProblemDetailsFilter }],
     };

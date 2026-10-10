@@ -13,6 +13,7 @@ import {
   TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
 import type { Response } from 'express';
+import { Public } from '../auth/decorators';
 import { ReadinessCheck } from './readiness-check';
 import { ShutdownHealthIndicator } from './shutdown.health';
 
@@ -23,6 +24,8 @@ const DB_PING_TIMEOUT_MS = 2_000;
  * - `GET /health/live`: the process is up (no dependency checks).
  * - `GET /health/ready`: dependencies are reachable; 503 when not, and during shutdown.
  */
+// Public: probes are called by the orchestrator without credentials and expose no data.
+@Public()
 @Controller({ path: 'health', version: VERSION_NEUTRAL })
 export class HealthController {
   constructor(

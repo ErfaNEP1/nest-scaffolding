@@ -21,3 +21,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Health checks with `@nestjs/terminus`: `GET /health/live` and `GET /health/ready` (database, shutdown state), outside `/api` and not access-logged.
 - OpenTelemetry: Prometheus metrics on a separate port (`METRICS_PORT`, default 9464) with HTTP (route template, status class), Node.js runtime, PostgreSQL pool and query duration and `build_info`; traces exported over OTLP only when `OTEL_EXPORTER_OTLP_ENDPOINT` is set; `traceId` and `spanId` in every log line; `traceparent` propagation.
 - Metric helper (`core/observability/metrics.ts`) that enforces metric naming and rejects high-cardinality labels.
+- Generic OIDC authentication: a global guard verifies Bearer JWTs against the issuer's JWKS (issuer, audience, expiry, algorithms), `@Public()`, `@Roles()`, `@CurrentUser()` and an `AuthorizationPolicy` extension point. Missing or invalid tokens get 401 Problem Details, missing roles 403.
+- Keycloak dev realm (`docker/keycloak/dev-realm.json`) with a public and a confidential client and two test users, for the Docker Compose `auth` profile.
