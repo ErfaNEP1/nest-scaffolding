@@ -5,7 +5,8 @@ import { Logger, PinoLogger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import { loadConfigOrExit } from './bootstrap';
 import { ConfigService } from './config';
-import { configureHttp } from './core/http';
+import { apiInfo } from './api-info';
+import { buildOpenApiDocument, configureHttp, serveApiDocs } from './core/http';
 import { enableGracefulShutdown } from './core/lifecycle';
 
 async function bootstrap(): Promise<void> {
@@ -19,6 +20,7 @@ async function bootstrap(): Promise<void> {
   logger.setContext('Bootstrap');
 
   configureHttp(app, app.get(ConfigService));
+  if (config.http.docsEnabled) serveApiDocs(app, buildOpenApiDocument(app, apiInfo()));
   enableGracefulShutdown(app, config.app.shutdownTimeoutMs, logger);
 
   await app.listen(config.http.port, config.http.host);

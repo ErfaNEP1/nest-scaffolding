@@ -1,7 +1,9 @@
 import { RequestMethod, VersioningType } from '@nestjs/common';
 import type { NestExpressApplication } from '@nestjs/platform-express';
+import type { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import type { ConfigService } from '../../config';
+import { DOCS_PATH } from './openapi';
 
 export const API_PREFIX = 'api';
 
@@ -20,7 +22,20 @@ export function configureHttp(app: NestExpressApplication, config: ConfigService
   const http = config.get('http');
   app.setGlobalPrefix(API_PREFIX, { exclude: UNPREFIXED_ROUTES });
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
-  app.use(helmet());
+  const strict = helmet();
+  // The docs UI loads its script from a CDN and runs inline code; relax CSP only there.
+  const docs = helmet({
+    contentSecurityPolicy: {
+      directives: {
+        'script-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+        'connect-src': ["'self'"],
+        'upgrade-insecure-requests': null,
+      },
+    },
+  });
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    (req.path.startsWith(DOCS_PATH) ? docs : strict)(req, res, next);
+  });
   app.enableCors({
     origin: http.corsOrigins,
     credentials: true,

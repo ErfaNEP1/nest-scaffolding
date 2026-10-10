@@ -6,3 +6,12 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@types/node@24.19.2'
   - uuid@14.0.3
+# Approved exceptions (docs/architecture/stack.md, "Conflicts and decisions"):
+# nestjs-zod 5.5.0 declares NestJS 10/11 and swagger 11 peers but works with NestJS 12;
+# openapi-typescript 7.13.0 declares TypeScript 5 but works with TypeScript 6.
+# Remove each entry once the package declares the newer peer ranges.
+peerDependencyRules:
+  allowedVersions:
+    nestjs-zod>@nestjs/common: '12'
+    nestjs-zod>@nestjs/swagger: '12'
+    openapi-typescript>typescript: '6'

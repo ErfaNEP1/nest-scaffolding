@@ -144,5 +144,20 @@ function toConfig(env: Env): Config {
   };
 }
 
+/**
+ * Fixed configuration for tooling that builds the app without running it
+ * (`pnpm openapi:generate`). It ignores the environment so the output is deterministic.
+ */
+export function loadToolingConfig(): Config {
+  return loadConfig({
+    NODE_ENV: 'production',
+    LOG_LEVEL: 'silent',
+    DATABASE_URL: 'postgres://tooling:tooling@localhost:5432/tooling',
+    OIDC_ISSUER_URL: 'https://issuer.invalid/',
+    OIDC_AUDIENCE: 'tooling',
+    METRICS_ENABLED: 'false',
+  });
+}
+
 /** Names of all variables in the schema. Used by tests that check the docs stay in sync. */
 export const envVariableNames: readonly string[] = Object.keys(envSchema.shape);

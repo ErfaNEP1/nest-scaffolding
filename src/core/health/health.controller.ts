@@ -1,4 +1,5 @@
 import { Controller, Get, Res, VERSION_NEUTRAL } from '@nestjs/common';
+import { ApiExcludeController } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { Public } from '../auth/decorators';
 import { HealthService } from './health.service';
@@ -10,6 +11,7 @@ import { HealthService } from './health.service';
  */
 // Public: probes are called by the orchestrator without credentials and expose no data.
 @Public()
+@ApiExcludeController()
 @Controller({ path: 'health', version: VERSION_NEUTRAL })
 export class HealthController {
   constructor(private readonly health: HealthService) {}
