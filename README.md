@@ -39,7 +39,7 @@ TOKEN=$(curl -s -d grant_type=password -d client_id=web -d username=alice -d pas
 curl -s -H "Authorization: Bearer $TOKEN" http://localhost:3000/api/v1/samples
 ```
 
-Users `alice`/`alice` (roles `user`, `admin`) and `bob`/`bob` (role `user`). Machine client:
+Users `alice`/`alice` (roles `user`, `admin`) and `bob`/`bob` (role `viewer`: signed in but not allowed to use the sample endpoints, so you get 403). Machine client:
 `curl -s -d grant_type=client_credentials -d client_id=service -d client_secret=service-secret ...`.
 
 ## Scripts

@@ -12,7 +12,8 @@ export function contextModule(plugins: ClsPlugin[] = []): DynamicModule {
     global: true,
     plugins,
     middleware: {
-      mount: true,
+      // Mounted by HttpModule for every route (Nest would scope it to the /api prefix).
+      mount: false,
       generateId: true,
       idGenerator: (req: Request) => requestIdFor(req),
       setup: (cls, _req: Request, res: Response) => {

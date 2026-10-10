@@ -20,6 +20,13 @@ describe('health endpoints', () => {
     expect(res.body).toEqual({ status: 'ok' });
   });
 
+  it('returns x-request-id on probes too', async () => {
+    const res = await request(testApp.server)
+      .get('/health/live')
+      .set('x-request-id', 'probe-request-0001');
+    expect(res.headers['x-request-id']).toBe('probe-request-0001');
+  });
+
   it('GET /health/ready checks the database', async () => {
     const res = await request(testApp.server).get('/health/ready');
     expect(res.status).toBe(200);

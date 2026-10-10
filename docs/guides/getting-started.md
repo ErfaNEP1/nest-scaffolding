@@ -41,7 +41,7 @@ curl -s -H "Authorization: Bearer $TOKEN" -H 'content-type: application/json' \
   -d '{"name":"first"}' http://localhost:3000/api/v1/samples
 ```
 
-Users: `alice`/`alice` (roles `user`, `admin`), `bob`/`bob` (role `user`). Machine client:
+Users: `alice`/`alice` (roles `user`, `admin`), `bob`/`bob` (role `viewer`: signed in but not allowed to use the sample endpoints, so you get 403). Machine client:
 `service` / `service-secret` (client credentials).
 
 ## 5. Before every commit

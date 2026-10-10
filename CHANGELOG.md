@@ -33,3 +33,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `AGENTS.md` as the single rule file for people and AI agents (Claude Code via `CLAUDE.md`, Cursor via `.cursor/rules/000-agents.mdc`, Codex natively), nine project skills in `.agents/skills/` (linked as `.claude/skills`) and `pnpm skills:sync`.
 - Documentation in `docs/`: index and precedence rules, architecture overview, stack, ADRs, API and database conventions, configuration, observability, runbook and guides.
 - Vendored third-party agent skills (obra/superpowers, mattpocock/skills, supabase/agent-skills, anthropics/skills, vercel-labs/skills; see `.agents/skills/THIRD_PARTY.md`) with project overrides in `AGENTS.md`, and `docs/plans/` for implementation plans.
+- Keycloak dev user `bob` has the role `viewer` (signed in, but no access to the sample endpoints) so the 403 case can be tried locally.
+
+### Fixed
+
+- Health probes now also return `x-request-id` (the request context middleware runs for every route, not only under `/api`).
+- `.env.example` no longer overrides the version and commit set by the image build (`build_info`).

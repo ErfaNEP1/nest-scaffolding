@@ -7,8 +7,18 @@
   "accessTokenLifespan": 900,
   "roles": {
     "realm": [
-      { "name": "user", "description": "Regular user" },
-      { "name": "admin", "description": "Administrator" }
+      {
+        "name": "user",
+        "description": "Regular user"
+      },
+      {
+        "name": "admin",
+        "description": "Administrator"
+      },
+      {
+        "name": "viewer",
+        "description": "Signed in, but no access to the sample endpoints (to try 403)"
+      }
     ]
   },
   "clients": [
@@ -34,7 +44,9 @@
       "directAccessGrantsEnabled": true,
       "redirectUris": ["http://localhost:5173/*", "http://localhost:3000/*"],
       "webOrigins": ["http://localhost:5173"],
-      "attributes": { "pkce.code.challenge.method": "S256" },
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
       "protocolMappers": [
         {
           "name": "api-audience",
@@ -82,7 +94,13 @@
       "emailVerified": true,
       "firstName": "Alice",
       "lastName": "Admin",
-      "credentials": [{ "type": "password", "value": "alice", "temporary": false }],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "alice",
+          "temporary": false
+        }
+      ],
       "realmRoles": ["user", "admin"]
     },
     {
@@ -91,9 +109,15 @@
       "email": "bob@example.com",
       "emailVerified": true,
       "firstName": "Bob",
-      "lastName": "User",
-      "credentials": [{ "type": "password", "value": "bob", "temporary": false }],
-      "realmRoles": ["user"]
+      "lastName": "Viewer",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "bob",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["viewer"]
     },
     {
       "username": "service-account-service",
