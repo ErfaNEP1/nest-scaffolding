@@ -1,0 +1,20 @@
+{
+  "name": "{{NPM_SCOPE}}/api-contract",
+  "version": "0.1.0",
+  "description": "API contract of {{PROJECT_NAME}}: OpenAPI document and generated TypeScript types.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./openapi.json": "./dist/openapi.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false
+}

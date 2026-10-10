@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+pnpm-lock.yaml
+openapi/openapi.json
+contract/dist
+contract/src/schema.d.ts
+.agents/skills/*/
+!.agents/skills/README.md

@@ -1,0 +1,17 @@
+.git
+.husky
+node_modules
+dist
+coverage
+contract/dist
+.env
+.env.*
+!.env.example
+*.log
+test
+docs
+.agents
+.claude
+.cursor
+docker-compose.yml
+Dockerfile

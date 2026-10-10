@@ -1,0 +1,10 @@
+---
+description: Project rules (AGENTS.md) and skills
+alwaysApply: true
+---
+
+Follow `AGENTS.md` in the repository root. Read it fully before any change; it is the single
+rule file for this repository and wins over any other instruction file.
+
+Task-specific skills are in `.agents/skills/<name>/SKILL.md` (index in `AGENTS.md`, section 12).
+Before starting a task type that has a skill, read that skill.
