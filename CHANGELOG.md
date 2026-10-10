@@ -28,3 +28,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API contract: Zod DTOs (`nestjs-zod`) validate requests (400 Problem Details with `errors[]`) and serialize responses; `pnpm openapi:generate` writes `openapi/openapi.json` without a database and `pnpm verify` fails when it is out of date; the `contract/` package (`{{NPM_SCOPE}}/api-contract`) ships the document and TypeScript types (`pnpm contract:build`, `pnpm contract:publish`).
 - API reference UI (Scalar) at `/api/docs` when `DOCS_ENABLED=true`.
 - Removable sample module (`src/modules/sample`) with `samples` table, CRUD endpoints under `/api/v1/samples` (cursor pagination, optimistic locking), the `sample.process` job, a custom metric and unit, integration and e2e tests.
+- Multi-stage `Dockerfile` (one non-root image; `api` or `worker` command) and `docker-compose.yml` for local development (`postgres`, one-shot `migrate`, `api`, `worker`, and `keycloak` under the `auth` profile).
+- `pnpm template:init --name <name> --scope <@scope> [--remove-sample]` replaces placeholders, resets the changelog and versions and can remove the sample module.

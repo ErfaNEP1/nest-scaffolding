@@ -33,7 +33,8 @@
     "openapi:generate": "nest build && node dist/openapi.js",
     "openapi:check": "nest build && node dist/openapi.js --check",
     "contract:build": "node scripts/contract-build.mjs",
-    "contract:publish": "pnpm contract:build && node scripts/contract-publish.mjs"
+    "contract:publish": "pnpm contract:build && node scripts/contract-publish.mjs",
+    "template:init": "node scripts/template-init.mjs"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.3",
