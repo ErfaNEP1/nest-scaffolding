@@ -4,7 +4,8 @@ const bool = z
   .enum(['true', 'false', '1', '0'])
   .transform((value) => value === 'true' || value === '1');
 
-const port = z.coerce.number().int().min(1).max(65_535);
+// 0 means "any free port" (tests).
+const port = z.coerce.number().int().min(0).max(65_535);
 const positiveInt = z.coerce.number().int().positive();
 const nonNegativeInt = z.coerce.number().int().nonnegative();
 const csv = z.string().transform((value) =>

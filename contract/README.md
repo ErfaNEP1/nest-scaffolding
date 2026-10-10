@@ -8,7 +8,7 @@ The API contract of `{{PROJECT_NAME}}` for front ends and other clients:
 ```ts
 import type { components, paths } from '{{NPM_SCOPE}}/api-contract';
 
-type Sample = components['schemas']['SampleResponse'];
+type Sample = components['schemas']['SampleResponse_Output']; // response schemas end in _Output
 type ListSamples = paths['/api/v1/samples']['get'];
 ```
 
