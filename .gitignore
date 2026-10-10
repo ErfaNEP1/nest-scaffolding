@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+contract/dist/
+contract/openapi.json
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
