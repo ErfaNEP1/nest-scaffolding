@@ -1,11 +1,9 @@
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 
-// SWC keeps decorator metadata, which Nest dependency injection needs.
-const plugins = [swc.vite({ module: { type: 'es6' } })];
-
 export default defineConfig({
-  plugins,
+  // SWC keeps decorator metadata, which Nest dependency injection needs.
+  plugins: [swc.vite({ module: { type: 'es6' } })],
   test: {
     passWithNoTests: true,
     coverage: {
@@ -16,7 +14,6 @@ export default defineConfig({
     },
     projects: [
       {
-        plugins,
         test: {
           name: 'unit',
           include: ['src/**/*.spec.ts', 'scripts/**/*.spec.ts'],
@@ -24,7 +21,6 @@ export default defineConfig({
         },
       },
       {
-        plugins,
         test: {
           name: 'integration',
           include: ['test/integration/**/*.int-spec.ts'],
@@ -35,7 +31,6 @@ export default defineConfig({
         },
       },
       {
-        plugins,
         test: {
           name: 'e2e',
           include: ['test/e2e/**/*.e2e-spec.ts'],
