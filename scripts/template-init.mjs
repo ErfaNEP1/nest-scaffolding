@@ -10,6 +10,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, lstatSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { runPnpm } from './run-pnpm.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SELF = 'scripts/template-init.mjs';
@@ -102,21 +103,19 @@ function removeSample() {
   const observability = join(root, 'docs/operations/observability.md');
   const lines = readFileSync(observability, 'utf8').split('\n');
   writeFileSync(observability, lines.filter((line) => !line.includes('app_sample_')).join('\n'));
-  execFileSync('pnpm', ['openapi:generate'], { cwd: root, stdio: 'inherit' });
+  runPnpm(['openapi:generate'], { cwd: root, stdio: 'inherit' });
 }
 
 const args = parseArgs(process.argv.slice(2));
 const changed = replacePlaceholders(args.name, args.scope);
 resetVersions();
 // Longer names change table widths; keep the files formatted.
-execFileSync(
-  'pnpm',
-  ['exec', 'prettier', '--write', '--log-level', 'warn', '--ignore-unknown', ...changed],
-  {
+if (changed.length > 0) {
+  runPnpm(['exec', 'prettier', '--write', '--log-level', 'warn', '--ignore-unknown', ...changed], {
     cwd: root,
     stdio: 'inherit',
-  },
-);
+  });
+}
 if (args.removeSample) removeSample();
 
 process.stdout.write(`
