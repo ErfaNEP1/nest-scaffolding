@@ -41,6 +41,8 @@ export default tseslint.config(
     rules: {
       'no-console': 'error',
       eqeqeq: ['error', 'always'],
+      // Metric attribute types need index signatures, which only type aliases give.
+      '@typescript-eslint/consistent-type-definitions': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/consistent-type-assertions': [
         'error',

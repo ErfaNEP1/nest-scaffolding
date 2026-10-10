@@ -18,3 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Forward-only SQL migrations: `db/migrate.sh` (checksums, advisory lock, one transaction per file, `--dry-run`, `--status`) and `pnpm db:new` / `db:migrate` / `db:status`.
 - TypeORM data access (queries only) with snake_case naming, pool and timeout settings, `@Transactional()` with a `DbSessionContext` hook for session settings such as row-level security, an optimistic locking helper and PostgreSQL error mapping (unique and foreign key violations → 409, serialization failures → retryable 409).
 - Testcontainers setup: one PostgreSQL container per test run, migrated with `db/migrate.sh`.
+- Health checks with `@nestjs/terminus`: `GET /health/live` and `GET /health/ready` (database, shutdown state), outside `/api` and not access-logged.
+- OpenTelemetry: Prometheus metrics on a separate port (`METRICS_PORT`, default 9464) with HTTP (route template, status class), Node.js runtime, PostgreSQL pool and query duration and `build_info`; traces exported over OTLP only when `OTEL_EXPORTER_OTLP_ENDPOINT` is set; `traceId` and `spanId` in every log line; `traceparent` propagation.
+- Metric helper (`core/observability/metrics.ts`) that enforces metric naming and rejects high-cardinality labels.

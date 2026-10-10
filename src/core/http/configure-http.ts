@@ -6,7 +6,10 @@ import type { ConfigService } from '../../config';
 export const API_PREFIX = 'api';
 
 /** Routes outside `/api` (probes). They are not versioned and need no auth. */
-export const UNPREFIXED_ROUTES = [{ path: 'health/{*path}', method: RequestMethod.GET }];
+export const UNPREFIXED_ROUTES = [
+  { path: 'health/live', method: RequestMethod.GET },
+  { path: 'health/ready', method: RequestMethod.GET },
+];
 
 /**
  * HTTP settings shared by the real app and the e2e app factory:

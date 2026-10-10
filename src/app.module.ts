@@ -3,8 +3,10 @@ import { APP_FILTER } from '@nestjs/core';
 import { type Config, ConfigModule } from './config';
 import { contextModule } from './core/context';
 import { DatabaseModule, transactionalPlugin } from './core/database';
+import { HealthModule } from './core/health';
 import { HttpModule, ProblemDetailsFilter } from './core/http';
 import { loggerModule } from './core/logging';
+import { ObservabilityModule } from './core/observability';
 
 export interface AppModuleOptions {
   /** `false` builds the app without connecting to PostgreSQL (OpenAPI generation). */
@@ -23,6 +25,8 @@ export class AppModule {
         loggerModule(),
         HttpModule,
         DatabaseModule.forRoot({ connect: options.connectDatabase ?? true }),
+        ObservabilityModule,
+        HealthModule,
       ],
       providers: [{ provide: APP_FILTER, useClass: ProblemDetailsFilter }],
     };
