@@ -98,6 +98,9 @@ function removeSample() {
     .replace("import { SampleModule } from './modules/sample';\n", '')
     .replace('[SampleModule]', '[]');
   writeFileSync(registry, source);
+  const observability = join(root, 'docs/operations/observability.md');
+  const lines = readFileSync(observability, 'utf8').split('\n');
+  writeFileSync(observability, lines.filter((line) => !line.includes('app_sample_')).join('\n'));
   execFileSync('pnpm', ['openapi:generate'], { cwd: root, stdio: 'inherit' });
 }
 

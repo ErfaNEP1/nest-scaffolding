@@ -30,3 +30,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removable sample module (`src/modules/sample`) with `samples` table, CRUD endpoints under `/api/v1/samples` (cursor pagination, optimistic locking), the `sample.process` job, a custom metric and unit, integration and e2e tests.
 - Multi-stage `Dockerfile` (one non-root image; `api` or `worker` command) and `docker-compose.yml` for local development (`postgres`, one-shot `migrate`, `api`, `worker`, and `keycloak` under the `auth` profile).
 - `pnpm template:init --name <name> --scope <@scope> [--remove-sample]` replaces placeholders, resets the changelog and versions and can remove the sample module.
+- `AGENTS.md` as the single rule file for people and AI agents (Claude Code via `CLAUDE.md`, Cursor via `.cursor/rules/000-agents.mdc`, Codex natively), nine project skills in `.agents/skills/` (linked as `.claude/skills`) and `pnpm skills:sync`.
+- Documentation in `docs/`: index and precedence rules, architecture overview, stack, ADRs, API and database conventions, configuration, observability, runbook and guides.
